@@ -7,7 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon --watch src --exec tsx src/index.ts",
     "migrate": "tsx src/db/migrate.ts",
-    "seed": "tsx src/db/seed.ts"
+    "seed": "tsx src/db/seed.ts",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
   },
   "keywords": [],
   "author": "",
@@ -23,8 +25,11 @@
     "@types/express": "^5.0.3",
     "@types/node": "^24.2.1",
     "@types/pg": "^8.15.5",
+    "eslint": "^9.33.0",
+    "globals": "^16.3.0",
     "nodemon": "^3.1.10",
     "tsx": "^4.20.3",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.39.0"
   }
 }
