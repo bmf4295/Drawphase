@@ -40,7 +40,7 @@ services:
       postgres:
         condition: service_healthy
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@local
+      PGADMIN_DEFAULT_EMAIL: me@bradyfriese.com
       PGADMIN_DEFAULT_PASSWORD: admin
     ports:
       - "5050:80"

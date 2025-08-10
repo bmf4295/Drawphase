@@ -100,3 +100,6 @@ temp/
 *.bak
 *.backup
 *.old
+
+#vs code files
+.vscode/*
