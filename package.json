@@ -7,6 +7,7 @@
     "dev:web": "npm --workspace apps/web run dev",
     "dev:server": "npm --workspace apps/server run dev",
     "dev": "concurrently -n web,server -c blue,green \"npm:dev:web\" \"npm:dev:server\"",
+    "lint": "npm run lint --workspaces",
     "typecheck": "npm run typecheck --workspaces",
     "typecheck:web": "npm --workspace apps/web run typecheck",
     "typecheck:server": "npm --workspace apps/server run typecheck"
