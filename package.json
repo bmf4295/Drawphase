@@ -10,7 +10,10 @@
     "lint": "npm run lint --workspaces",
     "typecheck": "npm run typecheck --workspaces",
     "typecheck:web": "npm --workspace apps/web run typecheck",
-    "typecheck:server": "npm --workspace apps/server run typecheck"
+    "typecheck:server": "npm --workspace apps/server run typecheck",
+    "build": "npm run build --workspaces",
+    "build:web": "npm --workspace apps/web run build",
+    "build:server": "npm --workspace apps/server run build"
   },
   "keywords": [],
   "author": "",
