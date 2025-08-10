@@ -1,0 +1,63 @@
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: drawphase-postgres
+    restart: unless-stopped
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB} -h 127.0.0.1"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  redis:
+    image: redis:7
+    container_name: drawphase-redis
+    restart: unless-stopped
+    ports:
+      - "${REDIS_PORT}:6379"
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  pgadmin: # optional, comment out if you don't want it
+    image: dpage/pgadmin4:8
+    container_name: drawphase-pgadmin
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@local
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+
+  # coturn: # add later when wiring WebRTC
+  #   image: instrumentisto/coturn
+  #   container_name: drawphase-coturn
+  #   restart: unless-stopped
+  #   ports:
+  #     - "3478:3478/udp"
+  #     - "3478:3478/tcp"
+  #   environment:
+  #     - TURN_PORT=3478
+  #     - TURN_REALM=drawphase.local
+  #     - TURN_USER=turnuser
+  #     - TURN_PASSWORD=turnpass
+
+volumes:
+  pgdata:
+  redisdata:
