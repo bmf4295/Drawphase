@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { logout } from "../../hooks/useLogout";
-import LoginButton from "../LoginButton/LoginButton";
+import LoginButton from "../loginButton/LoginButton";
 const NavigationBar: React.FC = () => {
     const api = import.meta.env.VITE_API_URL || 'http://localhost:3001';
     const [isLoggedIn, setIsLoggedIn] = useState(false);
