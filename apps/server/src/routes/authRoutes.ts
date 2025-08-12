@@ -1,6 +1,9 @@
 import { Router } from "express";
 import passport from "../auth/google.js";
 import type { RequestHandler } from "express";
+import requireAuth from "../middleware/authMiddleware.js";
+import jwt from "jsonwebtoken";
+import type { AuthenticatedRequest } from "../types/AuthenticatedRequest.js";
 
 const router = Router();
 
@@ -21,6 +24,20 @@ router.get('/auth/google/callback',
         res.redirect(process.env.WEB_ORIGIN!)
     }
 );
+
+router.get('/auth/status', requireAuth, (_req: AuthenticatedRequest, res) => {
+    const cookie: string | undefined = _req.cookies?.sid;
+    if (cookie !== undefined) {
+        jwt.verify(cookie, process.env.JWT_SECRET!, (err, decoded) => {
+            if (err) {
+                return res.status(401).json({ ok: false });
+            }
+            res.json({ ok: true, decoded });
+        });
+    }
+
+});
+
 
 router.get('/auth/failure', (_req, res) => res.status(401).json({ ok: false }));
 
