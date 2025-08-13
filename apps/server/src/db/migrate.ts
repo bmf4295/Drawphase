@@ -11,6 +11,12 @@ async function main() {
             username citext unique,
             created_at timestamptz not null default now()
         );
+        create table if not exists friends(
+            user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+            friend_id UUID REFERENCES users(id) ON DELETE CASCADE,
+            status TEXT NOT NULL,
+            PRIMARY KEY (user_id, friend_id)
+        );
     `);
     console.log('migrations ok');
     process.exit(0);
