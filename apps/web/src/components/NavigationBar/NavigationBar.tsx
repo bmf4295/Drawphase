@@ -13,7 +13,6 @@ const NavigationBar: React.FC = () => {
             const authRes = await fetch(`${api}/auth/status`, { credentials: "include", })
             if (authRes.ok) {
                 setIsLoggedIn(true);
-                //now that we have authenticated the login, now we fetch the user and save their info to the context
                 const userRes = await fetch(`${api}/user/me`, { credentials: "include" });
                 if (userRes.ok) {
                     const userInfo = await userRes.json();
@@ -29,7 +28,8 @@ const NavigationBar: React.FC = () => {
             }
         }
         checkAuthAndGetUserInfo();
-    }, [api, userCtx]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [api]);
 
     return (
         <div className="flex items-center justify-between fixed top-0 left-0 w-full z-50 bg-gray-800/50 px-6 py-3 after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-white/10">
@@ -65,7 +65,7 @@ const NavigationBar: React.FC = () => {
                         </button>
                         <button
                             className="text-white px-4 py-2 rounded hover:bg-gray-700 bg-gray-600 transition"
-                            onClick={() => logout(api, setIsLoggedIn)}
+                            onClick={() => logout(api, setIsLoggedIn, userCtx!.setUser)}
                         >
                             Logout
                         </button>
